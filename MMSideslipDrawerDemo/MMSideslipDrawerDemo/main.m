@@ -1,8 +1,8 @@
 //
 //  main.m
-//  MMSideslipDrawer
+//  MMSideslipDrawerDemo
 //
-//  Created by LEA on 2017/2/17.
+//  Created by LEA on 2017/4/22.
 //  Copyright © 2017年 LEA. All rights reserved.
 //
 

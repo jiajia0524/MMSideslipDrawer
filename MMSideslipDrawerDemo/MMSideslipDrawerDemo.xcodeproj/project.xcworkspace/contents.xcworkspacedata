@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:MMSideslipDrawer.xcodeproj">
+      location = "self:MMSideslipDrawerDemo.xcodeproj">
    </FileRef>
 </Workspace>

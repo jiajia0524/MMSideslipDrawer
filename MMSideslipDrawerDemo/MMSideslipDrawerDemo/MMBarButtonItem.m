@@ -13,7 +13,7 @@
 - (instancetype)initWithTitle:(NSString *)title target:(id)target action:(SEL)action
 {
     UIFont *font = [UIFont systemFontOfSize:16.0];
-    CGFloat textW = [self getTextSize:title font:font maxSize:CGSizeMake(kWidth, 44)].width;
+    CGFloat textW = [self getTextSize:title font:font maxSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, 44)].width;
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, textW, 44)];
     [btn.titleLabel setFont:font];
     [btn setTitle:title forState:UIControlStateNormal];
@@ -35,7 +35,7 @@
 {
     _btTitle = btTitle;
     UIFont *font = [UIFont systemFontOfSize:16.0];
-    CGFloat textW = [self getTextSize:btTitle font:font maxSize:CGSizeMake(kWidth, 44)].width;
+    CGFloat textW = [self getTextSize:btTitle font:font maxSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, 44)].width;
     UIButton *bt = (UIButton *)self.customView;
     bt.frame = CGRectMake(0, 0, textW, 44);
     [bt setTitle:btTitle forState:UIControlStateNormal];

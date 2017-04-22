@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import <MapKit/MapKit.h>
+#import "MMSideslipDrawer.h"
+#import "MMBarButtonItem.h"
 
 @interface ViewController ()<MMSideslipDrawerDelegate>
 
@@ -40,9 +42,9 @@
     {
         MMSideslipItem *item = [[MMSideslipItem alloc] init];
         item.thumbnailPath = [[NSBundle mainBundle] pathForResource:@"menu_head@2x" ofType:@"png"];
-        item.name = @"LEA";
-        item.vip = @"普通会员";
-        item.vipImageName = @"menu_vip";
+        item.userName = @"LEA";
+        item.userLevel = @"普通会员";
+        item.levelImageName = @"menu_vip";
         item.textArray = @[@"行程",@"钱包",@"客服",@"设置"];
         item.imageNameArray = @[@"menu_0",@"menu_1",@"menu_2",@"menu_3"];
         
@@ -54,7 +56,7 @@
 #pragma mark - 侧滑点击
 - (void)leftDrawerButtonPress:(id)sender
 {
-    [self.slipDrawer openLeftDrawerSide:self.view.window];
+    [self.slipDrawer openLeftDrawerSide];
 }
 
 - (void)rightDrawerButtonPress:(id)sender
@@ -75,7 +77,7 @@
     NSLog(@"点击头像");
 }
 
-- (void)didViewVIPInformation:(MMSideslipDrawer *)slipDrawer
+- (void)didViewUserLevelInformation:(MMSideslipDrawer *)slipDrawer
 {
     [slipDrawer colseLeftDrawerSide];
     NSLog(@"点击会员");

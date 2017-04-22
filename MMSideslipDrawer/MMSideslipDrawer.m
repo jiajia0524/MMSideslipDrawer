@@ -13,9 +13,7 @@
 @property (nonatomic, strong) UIView *alphaView;
 @property (nonatomic, strong) UIView *menuView;
 @property (nonatomic, strong) UITableView *tableView;
-
 @property (nonatomic, strong) UIView *headView;
-@property (nonatomic, strong) UIImageView *thumblImageView;
 @property (nonatomic, strong) UILabel *nameLab;
 @property (nonatomic, strong) UIButton *rankBtn;
 
@@ -38,19 +36,43 @@
         [self addSubview:self.alphaView];
         [self addSubview:self.menuView];
         
-        //## 更新UI
-        self.thumblImageView.image = [UIImage imageWithContentsOfFile:item.thumbnailPath];
-        self.nameLab.text = item.name;
-        [self.rankBtn setImage:[UIImage imageNamed:item.vipImageName] forState:UIControlStateNormal];
-        [self.rankBtn setTitle:item.vip forState:UIControlStateNormal];
-        [self.tableView reloadData];
-        
         //## 拖动手势
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureCallback:)];
         [pan setDelegate:self];
         [self addGestureRecognizer:pan];
+        
+        //## 更新UI
+        self.nameLab.text = item.userName;
+        if (item.thumbnailPath) {
+            self.portraitImageView.image = [UIImage imageWithContentsOfFile:item.thumbnailPath];
+        }
+        if (item.levelImageName) {
+            [self.rankBtn setImage:[UIImage imageNamed:item.levelImageName] forState:UIControlStateNormal];
+        }
+        if (item.userLevel) {
+            [self.rankBtn setTitle:item.userLevel forState:UIControlStateNormal];
+        }
+        [self.tableView reloadData];
     }
     return self;
+}
+
+#pragma mark - setter
+- (void)setUserName:(NSString *)userName
+{
+    _userName = userName;
+    self.nameLab.text = userName;
+}
+
+- (void)setUserLevel:(NSString *)userLevel
+{
+    _userLevel = userLevel;
+    [self.rankBtn setTitle:userLevel forState:UIControlStateNormal];
+}
+
+- (void)setLevelImageName:(NSString *)levelImageName
+{
+    [self.rankBtn setImage:[UIImage imageNamed:levelImageName] forState:UIControlStateNormal];
 }
 
 #pragma mark - 事件
@@ -66,9 +88,10 @@
                      }];
 }
 
-- (void)openLeftDrawerSide:(UIView *)view
+- (void)openLeftDrawerSide
 {
-    [view addSubview:self];
+    UIWindow *window = [[UIApplication sharedApplication].windows firstObject];
+    [window addSubview:self];
     [UIView animateWithDuration:0.25
                      animations:^{
                          self.alphaView.alpha = 0.5;
@@ -139,8 +162,8 @@
 
 - (void)btClickedCallBack
 {
-    if ([self.delegate respondsToSelector:@selector(didViewVIPInformation:)]) {
-        [self.delegate didViewVIPInformation:self];
+    if ([self.delegate respondsToSelector:@selector(didViewUserLevelInformation:)]) {
+        [self.delegate didViewUserLevelInformation:self];
     }
 }
 
@@ -172,7 +195,7 @@
 - (UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(20, self.headView.height, kMMSideslipWidth-20, kHeight-self.headView.height)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(kMMSideslipWidth/8, self.headView.height, kMMSideslipWidth*7/8, kHeight-self.headView.height)];
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
@@ -189,31 +212,32 @@
     if (!_headView) {
         _headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMMSideslipWidth, kMMSideslipTopHeight)];
         _headView.backgroundColor = [UIColor clearColor];
-        [_headView addSubview:self.thumblImageView];
+        [_headView addSubview:self.portraitImageView];
         [_headView addSubview:self.nameLab];
         [_headView addSubview:self.rankBtn];
     }
     return _headView;
 }
 
-- (UIImageView *)thumblImageView
+- (UIImageView *)portraitImageView
 {
-    if (!_thumblImageView) {
-        _thumblImageView = [[UIImageView alloc] initWithFrame:CGRectMake((_headView.width-60)/2, (_headView.height-60-50)/2+10, 60, 60)];
-        _thumblImageView.layer.cornerRadius = _thumblImageView.height/2;
-        _thumblImageView.layer.masksToBounds = YES;
-        _thumblImageView.userInteractionEnabled = YES;
+    if (!_portraitImageView) {
+        _portraitImageView = [[UIImageView alloc] initWithFrame:CGRectMake((_headView.width-60)/2, (_headView.height-60-50)/2+10, 60, 60)];
+        _portraitImageView.layer.cornerRadius = _portraitImageView.height/2;
+        _portraitImageView.layer.masksToBounds = YES;
+        _portraitImageView.userInteractionEnabled = YES;
+        _portraitImageView.backgroundColor = [UIColor grayColor];
 
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureCallback:)];
-        [_thumblImageView addGestureRecognizer:tap];
+        [_portraitImageView addGestureRecognizer:tap];
     }
-    return _thumblImageView;
+    return _portraitImageView;
 }
 
 - (UILabel *)nameLab
 {
     if (!_nameLab) {
-        _nameLab = [[UILabel alloc] initWithFrame:CGRectMake(self.thumblImageView.left, self.thumblImageView.bottom+5, self.thumblImageView.width, 25)];
+        _nameLab = [[UILabel alloc] initWithFrame:CGRectMake(0, self.portraitImageView.bottom+5, kMMSideslipWidth, 30)];
         _nameLab.textColor = kMMSideslipMainColor;
         _nameLab.textAlignment = NSTextAlignmentCenter;
         _nameLab.font = [UIFont systemFontOfSize:18.0];
@@ -224,7 +248,7 @@
 - (UIButton *)rankBtn
 {
     if (!_rankBtn) {
-        _rankBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.nameLab.left-20, self.nameLab.bottom, self.nameLab.width+40, 20)];
+        _rankBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.portraitImageView.left-20, self.nameLab.bottom, self.portraitImageView.width+40, 20)];
         _rankBtn.backgroundColor = [UIColor clearColor];
         _rankBtn.adjustsImageWhenHighlighted = NO;
         _rankBtn.titleLabel.font = [UIFont systemFontOfSize:11.0];
