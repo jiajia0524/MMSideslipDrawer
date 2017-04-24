@@ -8,13 +8,13 @@
 
 ![MMSideslipDrawer](MMSideslipDrawer.gif)
 
-### 安装 [CocoaPods]
+## 安装 [CocoaPods]
 
 1. `pod 'MMSideslipDrawer', '~> 1.0'`;
 2. `pod install` / `pod update`;
 3. `#import <MMSideslipDrawer/MMSideslipDrawer.h>`;
 
-### 使用说明
+## 使用说明
 
   MMSideslipItem属性介绍：
   
@@ -74,15 +74,14 @@ self.slipDrawer = [[MMSideslipDrawer alloc] initWithDelegate:self slipItem:item]
 - (void)didViewUserLevelInformation:(MMSideslipDrawer *)slipDrawer;
 ```
 
-### 使用要求
+## 使用要求
 
-`iOS 7.0+` 
-`Xcode 7.0+`
+* iOS 7.0 or later.
+* Xcode 7.0 or later.
+* OS X 10.10 or later.
 
-
-### 许可证
+## 许可证
 
 MIT
-
 
 
