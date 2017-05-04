@@ -4,7 +4,7 @@
 [![CocoaPods](http://img.shields.io/cocoapods/v/MMSideslipDrawer.svg?style=flat)](https://cocoapods.org/pods/MMSideslipDrawer)&nbsp;
 [![CocoaPods](http://img.shields.io/cocoapods/p/MMSideslipDrawer.svg?style=flat)](https://cocoapods.org/pods/MMSideslipDrawer)&nbsp;
 
-侧滑菜单，支持滑动和点击，类似滴滴出行(滴滴打车)侧滑栏的实现过程
+侧滑菜单，支持滑动和点击，类似滴滴出行(滴滴打车)侧滑栏。
 
 ![MMSideslipDrawer](MMSideslipDrawer.gif)
 
