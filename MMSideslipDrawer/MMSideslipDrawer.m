@@ -10,7 +10,6 @@
 
 @interface MMSideslipDrawer ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) UIView *alphaView;
 @property (nonatomic, strong) UIView *menuView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *headView;
@@ -27,13 +26,13 @@
     if (self)
     {
         self.userInteractionEnabled = YES;
+        self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.0];
         
         //## 赋值
         _delegate = delegate;
         _item = item;
         
         //## 添加视图
-        [self addSubview:self.alphaView];
         [self addSubview:self.menuView];
         
         //## 拖动手势
@@ -75,28 +74,36 @@
     [self.rankBtn setImage:[UIImage imageNamed:levelImageName] forState:UIControlStateNormal];
 }
 
-#pragma mark - 事件
+#pragma mark - 显示|隐藏
 - (void)colseLeftDrawerSide
 {
-    [UIView animateWithDuration:0.4
-                     animations:^{
-                         self.alphaView.alpha = 0;
-                         self.menuView.left =  -self.menuView.width;
-                     }
-                     completion:^(BOOL finished) {
-                         [self removeFromSuperview];
-                     }];
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.4 animations:^{
+        weakSelf.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.0];
+        weakSelf.menuView.left =  -weakSelf.menuView.width;
+    } completion:^(BOOL finished) {
+        [weakSelf removeFromSuperview];
+    }];
 }
 
 - (void)openLeftDrawerSide
 {
-    UIWindow *window = [[UIApplication sharedApplication].windows firstObject];
-    [window addSubview:self];
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         self.alphaView.alpha = 0.5;
-                         self.menuView.left = 0;
-                     }];
+    __weak typeof(self) weakSelf = self;
+    [[UIApplication sharedApplication].keyWindow addSubview:weakSelf];
+    [UIView animateWithDuration:0.25 animations:^{
+        weakSelf.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
+        weakSelf.menuView.left = 0;
+    }];
+}
+
+#pragma mark - 点击隐藏
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint currentPoint = [touch locationInView:self.superview];
+    if (CGRectContainsPoint(self.menuView.frame, currentPoint) == NO) {
+        [self colseLeftDrawerSide];
+    }
 }
 
 #pragma mark - 手势处理
@@ -131,20 +138,18 @@
         {
             self.userInteractionEnabled = YES;
             //偏左向左滑，偏右向右滑
+            __weak typeof(self) weakSelf = self;
             if (self.menuView.left > -kMMSideslipWidth/4)  {
-                [UIView animateWithDuration:0.25
-                                 animations:^{
-                                     self.menuView.left = 0;
-                                 }];
+                [UIView animateWithDuration:0.25 animations:^{
+                    weakSelf.menuView.left = 0;
+                }];
             } else  {
-                [UIView animateWithDuration:0.25
-                                 animations:^{
-                                     self.menuView.left = -kMMSideslipWidth;
-                                     self.alphaView.alpha = 0;
-                                 }
-                                 completion:^(BOOL finished) {
-                                     [self removeFromSuperview];
-                                 }];
+                [UIView animateWithDuration:0.25 animations:^{
+                    weakSelf.menuView.left = -kMMSideslipWidth;
+                    weakSelf.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.0];
+                } completion:^(BOOL finished) {
+                    [weakSelf removeFromSuperview];
+                }];
             }
             break;
         }
@@ -168,19 +173,6 @@
 }
 
 #pragma mark - 视图
--(UIView *)alphaView
-{
-    if (!_alphaView) {
-        _alphaView = [[UIView alloc] initWithFrame:self.bounds];
-        _alphaView.backgroundColor = [UIColor blackColor];
-        _alphaView.alpha = 0;
-
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(colseLeftDrawerSide)];
-        [_alphaView addGestureRecognizer:tap];
-    }
-    return _alphaView;
-}
-
 - (UIView *)menuView
 {
     if (!_menuView) {
@@ -195,7 +187,7 @@
 - (UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(kMMSideslipWidth/8, self.headView.height, kMMSideslipWidth*7/8, kHeight-self.headView.height)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.headView.height, kMMSideslipWidth, kHeight-self.headView.height)];
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
@@ -227,7 +219,7 @@
         _portraitImageView.layer.masksToBounds = YES;
         _portraitImageView.userInteractionEnabled = YES;
         _portraitImageView.backgroundColor = [UIColor grayColor];
-
+        
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureCallback:)];
         [_portraitImageView addGestureRecognizer:tap];
     }
@@ -273,11 +265,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    MMSideslipDrawerCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[MMSideslipDrawerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont systemFontOfSize:16.0];
@@ -289,6 +280,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([self.delegate respondsToSelector:@selector(slipDrawer:didSelectAtIndex:)]) {
         [self.delegate slipDrawer:self didSelectAtIndex:indexPath.row];
     }
@@ -298,5 +290,19 @@
 
 #pragma mark - MMSideslipItem
 @implementation MMSideslipItem
+
+@end
+
+
+#pragma mark - MMSideslipDrawerCell
+@implementation MMSideslipDrawerCell
+
+- (void)layoutSubviews
+{
+    UIImage *image = self.imageView.image;
+    CGFloat h = image.size.height;
+    self.imageView.frame = CGRectMake(kMMSideslipWidth/8+15, (kMMSideslipCellHeight-h)/2, h, h);
+    self.textLabel.frame = CGRectMake(self.imageView.right+15, 0, kMMSideslipWidth-(self.imageView.right+30), kMMSideslipCellHeight);
+}
 
 @end

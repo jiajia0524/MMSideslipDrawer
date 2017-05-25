@@ -12,15 +12,17 @@
 //## 宏定义
 
 //设备物理宽度
-#define kWidth                  [UIScreen mainScreen].bounds.size.width
+#define kWidth                      [UIScreen mainScreen].bounds.size.width
 //设备物理高度
-#define kHeight                 [UIScreen mainScreen].bounds.size.height
+#define kHeight                     [UIScreen mainScreen].bounds.size.height
 //抽屉宽度
-#define kMMSideslipWidth        240.0*kWidth/320
+#define kMMSideslipWidth            240.0*kWidth/320
 //用户信息展示高度
-#define kMMSideslipTopHeight    180
+#define kMMSideslipTopHeight        180
+//行高
+#define kMMSideslipCellHeight       50
 //文字颜色
-#define kMMSideslipMainColor    [UIColor colorWithRed:74.0/255.0 green:75.0/255.0 blue:90.0/255.0 alpha:1.0]
+#define kMMSideslipMainColor        [UIColor colorWithRed:74.0/255.0 green:75.0/255.0 blue:90.0/255.0 alpha:1.0]
 
 @class MMSideslipItem;
 @protocol MMSideslipDrawerDelegate;
@@ -79,3 +81,9 @@
 @property (nonatomic,copy) NSArray *imageNameArray;
 
 @end
+
+
+@interface MMSideslipDrawerCell : UITableViewCell
+
+@end
+
