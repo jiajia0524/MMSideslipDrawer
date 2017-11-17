@@ -7,9 +7,8 @@
 //
 
 #import "ViewController.h"
-#import <MapKit/MapKit.h>
 #import "MMSideslipDrawer.h"
-#import "MMBarButtonItem.h"
+#import <MapKit/MapKit.h>
 
 @interface ViewController ()<MMSideslipDrawerDelegate>
 
@@ -23,19 +22,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //1.标题栏
     self.navigationItem.title = @"DEMO";
-    //2.左边按钮
-    MMBarButtonItem *leftItem = [[MMBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_left"] target:self action:@selector(leftDrawerButtonPress:)];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    MMBarButtonItem *rightItem = [[MMBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_right"] target:self action:@selector(rightDrawerButtonPress:)];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    //3.地图
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_left"] style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_right"] style:UIBarButtonItemStylePlain target:self action:@selector(rightDrawerButtonPress:)];
+
+    // 地图
     MKMapView *mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:mapView];
 }
 
+#pragma mark - 懒加载
 - (MMSideslipDrawer *)slipDrawer
 {
     if (!_slipDrawer)

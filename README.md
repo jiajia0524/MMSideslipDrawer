@@ -1,6 +1,6 @@
 # MMSideslipDrawer
 
-[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/dexianyinjiu/MMSideslipDrawer/master/LICENSE)&nbsp;
+[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/CheeryLau/MMSideslipDrawer/master/LICENSE)&nbsp;
 [![CocoaPods](http://img.shields.io/cocoapods/v/MMSideslipDrawer.svg?style=flat)](https://cocoapods.org/pods/MMSideslipDrawer)&nbsp;
 [![CocoaPods](http://img.shields.io/cocoapods/p/MMSideslipDrawer.svg?style=flat)](https://cocoapods.org/pods/MMSideslipDrawer)&nbsp;
 
@@ -10,9 +10,9 @@
 
 ## 安装 [CocoaPods]
 
-1. `pod 'MMSideslipDrawer', '~> 1.1'`;
+1. `pod "MMSideslipDrawer"`;
 2. `pod install` / `pod update`;
-3. `#import <MMSideslipDrawer/MMSideslipDrawer.h>`;
+3. `#import <MMSideslipDrawer.h>`;
 
 ## 使用说明
 
@@ -21,17 +21,17 @@
 ```objc
 @interface MMSideslipItem : NSObject
 
-//头像缩略图本地路径 [若为网络路径，可直接对portraitImageView赋值，具体见MMSideslipDrawer.h]
+// 头像缩略图本地路径 [若为网络路径，可直接对portraitImageView赋值，具体见MMSideslipDrawer.h]
 @property (nonatomic,copy) NSString *thumbnailPath;
-//用户名称
+// 用户名称
 @property (nonatomic,copy) NSString *userName;
-//用户等级
+// 用户等级
 @property (nonatomic,copy) NSString *userLevel;
-//等级图片名称
+// 等级图片名称
 @property (nonatomic,copy) NSString *levelImageName;
-//列表项名称数组 
+// 列表项名称数组 
 @property (nonatomic,copy) NSArray *textArray;
-//列表项图片名称数组 
+// 列表项图片名称数组 
 @property (nonatomic,copy) NSArray *imageNameArray;
 
 @end
@@ -66,11 +66,11 @@ self.slipDrawer = [[MMSideslipDrawer alloc] initWithDelegate:self slipItem:item]
    代理：
    
 ```objc
-//查看列表项信息
+// 查看列表项信息
 - (void)slipDrawer:(MMSideslipDrawer *)slipDrawer didSelectAtIndex:(NSInteger)index;
-//查看用户信息
+// 查看用户信息
 - (void)didViewUserInformation:(MMSideslipDrawer *)slipDrawer;
-//查看用户等级信息
+// 查看用户等级信息
 - (void)didViewUserLevelInformation:(MMSideslipDrawer *)slipDrawer;
 ```
 

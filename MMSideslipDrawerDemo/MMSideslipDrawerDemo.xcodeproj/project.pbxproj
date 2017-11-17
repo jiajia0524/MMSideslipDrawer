@@ -15,7 +15,6 @@
 		8B5494271EAB60C70024D821 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B5494251EAB60C70024D821 /* LaunchScreen.storyboard */; };
 		8B5494331EAB60DD0024D821 /* MMSideslipDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5494301EAB60DD0024D821 /* MMSideslipDrawer.m */; };
 		8B5494341EAB60DD0024D821 /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5494321EAB60DD0024D821 /* UIView+Category.m */; };
-		8B5494371EAB61110024D821 /* MMBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5494361EAB61110024D821 /* MMBarButtonItem.m */; };
 		8B54944A1EAB612C0024D821 /* default_top_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B5494391EAB612C0024D821 /* default_top_bar@2x.png */; };
 		8B54944B1EAB612C0024D821 /* menu_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B54943A1EAB612C0024D821 /* menu_0@2x.png */; };
 		8B54944C1EAB612C0024D821 /* menu_0@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B54943B1EAB612C0024D821 /* menu_0@3x.png */; };
@@ -50,8 +49,6 @@
 		8B5494301EAB60DD0024D821 /* MMSideslipDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSideslipDrawer.m; sourceTree = "<group>"; };
 		8B5494311EAB60DD0024D821 /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
 		8B5494321EAB60DD0024D821 /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
-		8B5494351EAB61110024D821 /* MMBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMBarButtonItem.h; sourceTree = "<group>"; };
-		8B5494361EAB61110024D821 /* MMBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMBarButtonItem.m; sourceTree = "<group>"; };
 		8B5494391EAB612C0024D821 /* default_top_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_top_bar@2x.png"; sourceTree = "<group>"; };
 		8B54943A1EAB612C0024D821 /* menu_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_0@2x.png"; sourceTree = "<group>"; };
 		8B54943B1EAB612C0024D821 /* menu_0@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_0@3x.png"; sourceTree = "<group>"; };
@@ -106,8 +103,6 @@
 				8B54941B1EAB60C70024D821 /* AppDelegate.m */,
 				8B54941D1EAB60C70024D821 /* ViewController.h */,
 				8B54941E1EAB60C70024D821 /* ViewController.m */,
-				8B5494351EAB61110024D821 /* MMBarButtonItem.h */,
-				8B5494361EAB61110024D821 /* MMBarButtonItem.m */,
 				8B5494171EAB60C70024D821 /* Supporting Files */,
 			);
 			path = MMSideslipDrawerDemo;
@@ -255,7 +250,6 @@
 				8B5494331EAB60DD0024D821 /* MMSideslipDrawer.m in Sources */,
 				8B54941C1EAB60C70024D821 /* AppDelegate.m in Sources */,
 				8B5494341EAB60DD0024D821 /* UIView+Category.m in Sources */,
-				8B5494371EAB61110024D821 /* MMBarButtonItem.m in Sources */,
 				8B5494191EAB60C70024D821 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

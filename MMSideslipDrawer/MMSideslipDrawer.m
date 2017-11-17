@@ -28,19 +28,10 @@
         self.userInteractionEnabled = YES;
         self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.0];
         
-        //## 赋值
-        _delegate = delegate;
         _item = item;
-        
-        //## 添加视图
+        _delegate = delegate;
         [self addSubview:self.menuView];
-        
-        //## 拖动手势
-        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureCallback:)];
-        [pan setDelegate:self];
-        [self addGestureRecognizer:pan];
-        
-        //## 更新UI
+        // 更新UI
         self.nameLab.text = item.userName;
         if (item.thumbnailPath) {
             self.portraitImageView.image = [UIImage imageWithContentsOfFile:item.thumbnailPath];
@@ -52,6 +43,10 @@
             [self.rankBtn setTitle:item.userLevel forState:UIControlStateNormal];
         }
         [self.tableView reloadData];
+        // 拖动手势
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureCallback:)];
+        [pan setDelegate:self];
+        [self addGestureRecognizer:pan];
     }
     return self;
 }
